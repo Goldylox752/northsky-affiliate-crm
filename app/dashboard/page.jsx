@@ -1,3 +1,5 @@
+import StatsCard from "@/components/StatsCard";
+
 export const metadata = {
   title: "Dashboard | NorthSky Affiliate CRM",
   description:
@@ -10,56 +12,63 @@ const stats = [
     title: "Monthly Revenue",
     value: "$8,420",
     change: "+31%",
+    icon: "💰",
   },
   {
     title: "Affiliate Clicks",
     value: "12,640",
     change: "+24%",
+    icon: "🔗",
   },
   {
     title: "Conversions",
     value: "326",
     change: "+12%",
+    icon: "📈",
   },
   {
     title: "Active Campaigns",
     value: "4",
     change: "Growing",
+    icon: "🚀",
   },
 ];
 
 
-const recentTasks = [
+const tasks = [
   {
-    task: "Publish AI Tools 2026 Review",
+    title: "Publish AI Tools 2026 Review",
     status: "In Progress",
   },
   {
-    task: "Add Jasper Affiliate Link",
+    title: "Add Jasper Affiliate Link",
     status: "Pending",
   },
   {
-    task: "Update VPN Comparison Page",
+    title: "Update VPN Comparison Page",
     status: "Complete",
   },
 ];
 
 
-const topCampaigns = [
+const campaigns = [
   {
     name: "AI Tools 2026",
     revenue: "$2,450",
     conversions: 96,
+    category: "AI Software",
   },
   {
     name: "VPN Security",
     revenue: "$960",
     conversions: 42,
+    category: "Security",
   },
   {
     name: "Travel eSIM Deals",
     revenue: "$620",
     conversions: 31,
+    category: "Travel Tech",
   },
 ];
 
@@ -68,10 +77,13 @@ export default function DashboardPage() {
 
   return (
 
-    <main className="min-h-screen bg-slate-950 text-white p-8">
+    <main className="min-h-screen bg-slate-950 text-white">
 
-      <div className="max-w-7xl mx-auto">
 
+      <div className="max-w-7xl mx-auto p-8">
+
+
+        {/* Header */}
 
         <div className="flex justify-between items-center mb-10">
 
@@ -82,15 +94,19 @@ export default function DashboardPage() {
               NorthSky Dashboard
             </h1>
 
+
             <p className="text-slate-400 mt-2">
-              Affiliate business command center.
+              Your affiliate growth command center.
             </p>
 
           </div>
 
 
+
           <button className="bg-blue-600 hover:bg-blue-700 px-5 py-3 rounded-lg">
+
             + Quick Action
+
           </button>
 
 
@@ -100,33 +116,18 @@ export default function DashboardPage() {
 
 
 
+        {/* Stats */}
+
 
         <div className="grid md:grid-cols-4 gap-6">
 
 
           {stats.map((stat)=>(
 
-            <div
+            <StatsCard
               key={stat.title}
-              className="bg-slate-900 border border-slate-800 rounded-xl p-6"
-            >
-
-              <p className="text-slate-400">
-                {stat.title}
-              </p>
-
-
-              <h2 className="text-3xl font-bold mt-2">
-                {stat.value}
-              </h2>
-
-
-              <p className="text-green-400 mt-3">
-                {stat.change}
-              </p>
-
-
-            </div>
+              {...stat}
+            />
 
           ))}
 
@@ -139,11 +140,16 @@ export default function DashboardPage() {
 
 
 
+        {/* Main Panels */}
+
+
         <div className="grid md:grid-cols-2 gap-6 mt-10">
 
 
+          {/* Revenue */}
 
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+
+          <section className="bg-slate-900 border border-slate-800 rounded-xl p-6">
 
 
             <h2 className="text-2xl font-bold">
@@ -151,83 +157,72 @@ export default function DashboardPage() {
             </h2>
 
 
-            <div className="mt-6">
+
+            <div className="mt-6 flex justify-between">
+
+              <span className="text-slate-400">
+                Monthly Goal
+              </span>
 
 
-              <div className="flex justify-between mb-2">
+              <span>
+                $8,420 / $10,000
+              </span>
 
-                <span>
-                  Monthly Goal
-                </span>
-
-                <span>
-                  $8,420 / $10,000
-                </span>
-
-              </div>
+            </div>
 
 
-              <div className="bg-slate-800 h-4 rounded-full">
 
 
-                <div
-                  className="bg-blue-600 h-4 rounded-full w-[84%]"
-                />
+            <div className="bg-slate-800 h-4 rounded-full mt-3">
 
 
-              </div>
+              <div
+                className="bg-blue-600 h-4 rounded-full"
+                style={{
+                  width:"84%"
+                }}
+              />
 
 
             </div>
+
 
 
 
             <div className="grid grid-cols-3 gap-4 mt-8">
 
 
-              <div className="bg-slate-800 p-4 rounded-lg">
+              {[
+                ["AI", "$2.4K"],
+                ["VPN", "$960"],
+                ["Travel", "$620"],
+              ].map((item)=>(
 
-                <p className="text-slate-400 text-sm">
-                  AI
-                </p>
+                <div
+                  key={item[0]}
+                  className="bg-slate-800 rounded-lg p-4"
+                >
 
-                <p className="font-bold">
-                  $2.4K
-                </p>
-
-              </div>
-
-
-              <div className="bg-slate-800 p-4 rounded-lg">
-
-                <p className="text-slate-400 text-sm">
-                  VPN
-                </p>
-
-                <p className="font-bold">
-                  $960
-                </p>
-
-              </div>
+                  <p className="text-slate-400 text-sm">
+                    {item[0]}
+                  </p>
 
 
-              <div className="bg-slate-800 p-4 rounded-lg">
+                  <p className="font-bold mt-2">
+                    {item[1]}
+                  </p>
 
-                <p className="text-slate-400 text-sm">
-                  Travel
-                </p>
 
-                <p className="font-bold">
-                  $620
-                </p>
+                </div>
 
-              </div>
+              ))}
 
 
             </div>
 
 
-          </div>
+          </section>
 
 
 
@@ -235,8 +230,10 @@ export default function DashboardPage() {
 
 
 
+          {/* Tasks */}
 
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+
+          <section className="bg-slate-900 border border-slate-800 rounded-xl p-6">
 
 
             <h2 className="text-2xl font-bold">
@@ -244,19 +241,21 @@ export default function DashboardPage() {
             </h2>
 
 
-            <div className="mt-5 space-y-4">
+
+            <div className="space-y-4 mt-6">
 
 
-              {recentTasks.map((task)=>(
+              {tasks.map((task)=>(
 
                 <div
-                  key={task.task}
-                  className="bg-slate-800 p-4 rounded-lg flex justify-between"
+                  key={task.title}
+                  className="bg-slate-800 rounded-lg p-4 flex justify-between"
                 >
 
                   <span>
-                    {task.task}
+                    {task.title}
                   </span>
+
 
                   <span className="text-slate-400 text-sm">
                     {task.status}
@@ -271,7 +270,7 @@ export default function DashboardPage() {
             </div>
 
 
-          </div>
+          </section>
 
 
         </div>
@@ -283,32 +282,43 @@ export default function DashboardPage() {
 
 
 
-        <div className="mt-10 bg-slate-900 border border-slate-800 rounded-xl p-6">
+        {/* Campaigns */}
 
 
-          <h2 className="text-2xl font-bold">
+        <section className="mt-10">
+
+
+          <h2 className="text-2xl font-bold mb-6">
             Top Campaign Performance
           </h2>
 
 
-          <div className="grid md:grid-cols-3 gap-5 mt-6">
+
+          <div className="grid md:grid-cols-3 gap-6">
 
 
-            {topCampaigns.map((campaign)=>(
+            {campaigns.map((campaign)=>(
 
               <div
                 key={campaign.name}
-                className="bg-slate-800 rounded-xl p-5"
+                className="bg-slate-900 border border-slate-800 rounded-xl p-6"
               >
 
-                <h3 className="font-bold text-lg">
+                <p className="text-blue-400 text-sm">
+                  {campaign.category}
+                </p>
+
+
+                <h3 className="text-xl font-bold mt-2">
                   {campaign.name}
                 </h3>
 
 
-                <p className="text-green-400 mt-3">
+
+                <p className="text-green-400 text-2xl font-bold mt-5">
                   {campaign.revenue}
                 </p>
+
 
 
                 <p className="text-slate-400 mt-2">
@@ -324,7 +334,7 @@ export default function DashboardPage() {
           </div>
 
 
-        </div>
+        </section>
 
 
 
@@ -332,42 +342,34 @@ export default function DashboardPage() {
 
 
 
-        <div className="grid md:grid-cols-4 gap-5 mt-10">
+
+        {/* Quick Links */}
 
 
-          <a
-            href="/content"
-            className="bg-slate-900 border border-slate-800 p-5 rounded-xl hover:border-blue-500"
-          >
-            📝 Content
-          </a>
+        <section className="grid md:grid-cols-4 gap-5 mt-10">
 
 
-          <a
-            href="/links"
-            className="bg-slate-900 border border-slate-800 p-5 rounded-xl hover:border-blue-500"
-          >
-            🔗 Links
-          </a>
+          {[
+            ["📝 Content","/content"],
+            ["🔗 Links","/links"],
+            ["🚀 Campaigns","/campaigns"],
+            ["📊 Analytics","/analytics"],
+          ].map((item)=>(
+
+            <a
+              key={item[1]}
+              href={item[1]}
+              className="bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-blue-500 transition"
+            >
+
+              {item[0]}
+
+            </a>
+
+          ))}
 
 
-          <a
-            href="/campaigns"
-            className="bg-slate-900 border border-slate-800 p-5 rounded-xl hover:border-blue-500"
-          >
-            🚀 Campaigns
-          </a>
-
-
-          <a
-            href="/analytics"
-            className="bg-slate-900 border border-slate-800 p-5 rounded-xl hover:border-blue-500"
-          >
-            📊 Analytics
-          </a>
-
-
-        </div>
+        </section>
 
 
 
