@@ -1,4 +1,6 @@
-import Link from "next/link";
+import StatsCard from "@/components/StatsCard";
+import DataTable from "@/components/DataTable";
+
 
 export const metadata = {
   title: "Affiliate Links | NorthSky CRM",
@@ -6,260 +8,307 @@ export const metadata = {
     "Manage NorthSky affiliate links, tracking URLs, and monetization campaigns.",
 };
 
+
+
+const stats = [
+  {
+    title: "Total Clicks",
+    value: "2,080",
+    change: "+18%",
+    icon: "🔗",
+  },
+  {
+    title: "Conversions",
+    value: "53",
+    change: "+12%",
+    icon: "📈",
+  },
+  {
+    title: "Revenue",
+    value: "$1,380",
+    change: "+24%",
+    icon: "💰",
+  },
+  {
+    title: "Conversion Rate",
+    value: "2.5%",
+    change: "+0.4%",
+    icon: "🎯",
+  },
+];
+
+
+
 const affiliateLinks = [
   {
     product: "NordVPN",
     category: "VPN & Security",
     network: "Direct Affiliate",
-    status: "Active",
     clicks: 1240,
-    conversions: 32,
-    commission: "$960",
-    url: "#",
+    sales: 32,
+    revenue: "$960",
+    status: "Active",
   },
   {
     product: "Saily eSIM",
     category: "Travel Tech",
     network: "Affiliate Program",
-    status: "Active",
     clicks: 840,
-    conversions: 21,
-    commission: "$420",
-    url: "#",
+    sales: 21,
+    revenue: "$420",
+    status: "Active",
   },
   {
     product: "Jasper AI",
     category: "AI Software",
     network: "Partner Program",
-    status: "Pending",
     clicks: 0,
-    conversions: 0,
-    commission: "$0",
-    url: "#",
+    sales: 0,
+    revenue: "$0",
+    status: "Pending",
   },
   {
     product: "Copy.ai",
     category: "AI Writing",
     network: "Affiliate Program",
-    status: "Pending",
     clicks: 0,
-    conversions: 0,
-    commission: "$0",
-    url: "#",
+    sales: 0,
+    revenue: "$0",
+    status: "Pending",
   },
   {
     product: "Writesonic",
     category: "AI Content",
     network: "Partner Program",
-    status: "Pending",
     clicks: 0,
-    conversions: 0,
-    commission: "$0",
-    url: "#",
+    sales: 0,
+    revenue: "$0",
+    status: "Pending",
   },
 ];
 
 
+
+const columns = [
+  {
+    key: "product",
+    label: "Product",
+  },
+  {
+    key: "category",
+    label: "Category",
+  },
+  {
+    key: "network",
+    label: "Network",
+  },
+  {
+    key: "clicks",
+    label: "Clicks",
+  },
+  {
+    key: "sales",
+    label: "Sales",
+  },
+  {
+    key: "revenue",
+    label: "Revenue",
+    render:(value)=>(
+      <span className="text-green-400 font-bold">
+        {value}
+      </span>
+    ),
+  },
+  {
+    key:"status",
+    label:"Status",
+    render:(value)=>(
+      <span
+        className={`px-3 py-1 rounded-full text-xs ${
+          value === "Active"
+          ? "bg-green-500/20 text-green-400"
+          : "bg-yellow-500/20 text-yellow-400"
+        }`}
+      >
+        {value}
+      </span>
+    ),
+  },
+];
+
+
+
 export default function LinksPage() {
+
 
   return (
 
-    <main className="min-h-screen bg-slate-950 text-white p-8">
+    <main className="min-h-screen bg-slate-950 text-white">
 
-      <div className="max-w-7xl mx-auto">
 
+      <div className="max-w-7xl mx-auto p-8">
+
+
+        {/* Header */}
 
         <div className="flex justify-between items-center mb-10">
 
+
           <div>
+
             <h1 className="text-4xl font-bold">
               Affiliate Links
             </h1>
 
+
             <p className="text-slate-400 mt-2">
-              Manage tracking links across NorthSky Reviews,
-              Deals, and future websites.
+              Track affiliate URLs, clicks, conversions, and revenue.
             </p>
+
+
           </div>
 
 
-          <button className="bg-blue-600 px-5 py-3 rounded-lg hover:bg-blue-700">
+
+          <button className="bg-blue-600 hover:bg-blue-700 px-5 py-3 rounded-lg">
+
             + Add Link
+
           </button>
 
+
         </div>
 
 
 
-        <div className="overflow-x-auto">
-
-          <table className="w-full bg-slate-900 rounded-xl overflow-hidden">
-
-            <thead className="bg-slate-800">
-
-              <tr className="text-left">
-
-                <th className="p-4">
-                  Product
-                </th>
-
-                <th className="p-4">
-                  Category
-                </th>
-
-                <th className="p-4">
-                  Network
-                </th>
-
-                <th className="p-4">
-                  Clicks
-                </th>
-
-                <th className="p-4">
-                  Sales
-                </th>
-
-                <th className="p-4">
-                  Revenue
-                </th>
-
-                <th className="p-4">
-                  Status
-                </th>
-
-              </tr>
-
-            </thead>
 
 
-            <tbody>
+
+        {/* Stats */}
+
+        <div className="grid md:grid-cols-4 gap-6">
 
 
-              {affiliateLinks.map((link)=> (
+          {stats.map((stat)=>(
 
-                <tr
-                  key={link.product}
-                  className="border-t border-slate-800"
-                >
+            <StatsCard
+              key={stat.title}
+              {...stat}
+            />
 
-                  <td className="p-4 font-semibold">
-                    {link.product}
-                  </td>
-
-
-                  <td className="p-4 text-slate-400">
-                    {link.category}
-                  </td>
-
-
-                  <td className="p-4 text-slate-400">
-                    {link.network}
-                  </td>
-
-
-                  <td className="p-4">
-                    {link.clicks}
-                  </td>
-
-
-                  <td className="p-4">
-                    {link.conversions}
-                  </td>
-
-
-                  <td className="p-4 text-green-400">
-                    {link.commission}
-                  </td>
-
-
-                  <td className="p-4">
-
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs ${
-                        link.status === "Active"
-                        ? "bg-green-500/20 text-green-400"
-                        : "bg-yellow-500/20 text-yellow-400"
-                      }`}
-                    >
-                      {link.status}
-                    </span>
-
-                  </td>
-
-
-                </tr>
-
-              ))}
-
-
-            </tbody>
-
-          </table>
+          ))}
 
 
         </div>
 
 
 
-        <div className="grid md:grid-cols-4 gap-6 mt-10">
 
 
-          <div className="bg-slate-900 p-6 rounded-xl">
-            <p className="text-slate-400">
-              Total Clicks
+
+
+
+        {/* Links Table */}
+
+        <div className="mt-10">
+
+
+          <DataTable
+            title="Affiliate Link Manager"
+            columns={columns}
+            data={affiliateLinks}
+          />
+
+
+        </div>
+
+
+
+
+
+
+
+        {/* Tracking Overview */}
+
+        <div className="grid md:grid-cols-3 gap-6 mt-10">
+
+
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+
+            <h3 className="text-xl font-bold">
+              Best Performing Link
+            </h3>
+
+
+            <p className="text-3xl font-bold mt-4">
+              NordVPN
             </p>
 
-            <h2 className="text-3xl font-bold">
-              2,080
-            </h2>
+
+            <p className="text-green-400 mt-2">
+              $960 generated
+            </p>
+
+
           </div>
 
 
-          <div className="bg-slate-900 p-6 rounded-xl">
 
-            <p className="text-slate-400">
-              Conversions
+
+
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+
+            <h3 className="text-xl font-bold">
+              Pending Programs
+            </h3>
+
+
+            <p className="text-3xl font-bold mt-4">
+              3
             </p>
 
-            <h2 className="text-3xl font-bold">
-              53
-            </h2>
+
+            <p className="text-slate-400 mt-2">
+              Awaiting approval
+            </p>
+
 
           </div>
 
 
-          <div className="bg-slate-900 p-6 rounded-xl">
 
-            <p className="text-slate-400">
-              Revenue
+
+
+
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+
+            <h3 className="text-xl font-bold">
+              Tracking Goal
+            </h3>
+
+
+            <p className="text-3xl font-bold mt-4 text-blue-400">
+              10,000 clicks
             </p>
 
-            <h2 className="text-3xl font-bold text-green-400">
-              $1,380
-            </h2>
 
-          </div>
-
-
-          <div className="bg-slate-900 p-6 rounded-xl">
-
-            <p className="text-slate-400">
-              Conversion Rate
+            <p className="text-slate-400 mt-2">
+              Monthly target
             </p>
 
-            <h2 className="text-3xl font-bold">
-              2.5%
-            </h2>
 
           </div>
 
 
         </div>
+
 
 
       </div>
 
+
     </main>
 
   );
+
 }
