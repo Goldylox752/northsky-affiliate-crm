@@ -1,10 +1,15 @@
 import StatsCard from "@/components/StatsCard";
+import RevenueChart from "@/components/RevenueChart";
+import CampaignCard from "@/components/CampaignCard";
+import ActivityFeed from "@/components/ActivityFeed";
+
 
 export const metadata = {
   title: "Dashboard | NorthSky Affiliate CRM",
   description:
     "NorthSky Affiliate CRM command center for affiliate revenue, campaigns, analytics, and growth.",
 };
+
 
 
 const stats = [
@@ -35,6 +40,7 @@ const stats = [
 ];
 
 
+
 const tasks = [
   {
     title: "Publish AI Tools 2026 Review",
@@ -51,26 +57,34 @@ const tasks = [
 ];
 
 
+
 const campaigns = [
   {
     name: "AI Tools 2026",
+    category: "AI Software",
     revenue: "$2,450",
     conversions: 96,
-    category: "AI Software",
+    status: "Active",
+    icon: "🤖",
   },
   {
     name: "VPN Security",
+    category: "Cyber Security",
     revenue: "$960",
     conversions: 42,
-    category: "Security",
+    status: "Active",
+    icon: "🔐",
   },
   {
     name: "Travel eSIM Deals",
+    category: "Travel Tech",
     revenue: "$620",
     conversions: 31,
-    category: "Travel Tech",
+    status: "Growing",
+    icon: "✈️",
   },
 ];
+
 
 
 export default function DashboardPage() {
@@ -81,6 +95,7 @@ export default function DashboardPage() {
 
 
       <div className="max-w-7xl mx-auto p-8">
+
 
 
         {/* Header */}
@@ -96,8 +111,9 @@ export default function DashboardPage() {
 
 
             <p className="text-slate-400 mt-2">
-              Your affiliate growth command center.
+              Affiliate growth command center.
             </p>
+
 
           </div>
 
@@ -116,8 +132,8 @@ export default function DashboardPage() {
 
 
 
-        {/* Stats */}
 
+        {/* KPI Stats */}
 
         <div className="grid md:grid-cols-4 gap-6">
 
@@ -140,97 +156,25 @@ export default function DashboardPage() {
 
 
 
-        {/* Main Panels */}
+        {/* Revenue Analytics */}
 
+        <div className="mt-10">
+
+          <RevenueChart />
+
+        </div>
+
+
+
+
+
+
+
+
+        {/* Operations */}
 
         <div className="grid md:grid-cols-2 gap-6 mt-10">
 
-
-          {/* Revenue */}
-
-
-          <section className="bg-slate-900 border border-slate-800 rounded-xl p-6">
-
-
-            <h2 className="text-2xl font-bold">
-              Revenue Overview
-            </h2>
-
-
-
-            <div className="mt-6 flex justify-between">
-
-              <span className="text-slate-400">
-                Monthly Goal
-              </span>
-
-
-              <span>
-                $8,420 / $10,000
-              </span>
-
-            </div>
-
-
-
-
-            <div className="bg-slate-800 h-4 rounded-full mt-3">
-
-
-              <div
-                className="bg-blue-600 h-4 rounded-full"
-                style={{
-                  width:"84%"
-                }}
-              />
-
-
-            </div>
-
-
-
-
-            <div className="grid grid-cols-3 gap-4 mt-8">
-
-
-              {[
-                ["AI", "$2.4K"],
-                ["VPN", "$960"],
-                ["Travel", "$620"],
-              ].map((item)=>(
-
-                <div
-                  key={item[0]}
-                  className="bg-slate-800 rounded-lg p-4"
-                >
-
-                  <p className="text-slate-400 text-sm">
-                    {item[0]}
-                  </p>
-
-
-                  <p className="font-bold mt-2">
-                    {item[1]}
-                  </p>
-
-
-                </div>
-
-              ))}
-
-
-            </div>
-
-
-          </section>
-
-
-
-
-
-
-
-          {/* Tasks */}
 
 
           <section className="bg-slate-900 border border-slate-800 rounded-xl p-6">
@@ -239,7 +183,6 @@ export default function DashboardPage() {
             <h2 className="text-2xl font-bold">
               Active Tasks
             </h2>
-
 
 
             <div className="space-y-4 mt-6">
@@ -273,6 +216,61 @@ export default function DashboardPage() {
           </section>
 
 
+
+
+
+
+          <section className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+
+
+            <h2 className="text-2xl font-bold">
+              Revenue Goal
+            </h2>
+
+
+            <p className="text-slate-400 mt-3">
+              Monthly affiliate target
+            </p>
+
+
+
+            <div className="flex justify-between mt-6">
+
+              <span>
+                $8,420
+              </span>
+
+
+              <span>
+                $10,000
+              </span>
+
+            </div>
+
+
+
+            <div className="bg-slate-800 h-4 rounded-full mt-3">
+
+              <div
+                className="bg-blue-600 h-4 rounded-full"
+                style={{
+                  width:"84%"
+                }}
+              />
+
+            </div>
+
+
+
+            <p className="text-green-400 mt-4">
+              84% completed
+            </p>
+
+
+          </section>
+
+
+
         </div>
 
 
@@ -282,8 +280,7 @@ export default function DashboardPage() {
 
 
 
-        {/* Campaigns */}
-
+        {/* Campaign Performance */}
 
         <section className="mt-10">
 
@@ -299,34 +296,10 @@ export default function DashboardPage() {
 
             {campaigns.map((campaign)=>(
 
-              <div
+              <CampaignCard
                 key={campaign.name}
-                className="bg-slate-900 border border-slate-800 rounded-xl p-6"
-              >
-
-                <p className="text-blue-400 text-sm">
-                  {campaign.category}
-                </p>
-
-
-                <h3 className="text-xl font-bold mt-2">
-                  {campaign.name}
-                </h3>
-
-
-
-                <p className="text-green-400 text-2xl font-bold mt-5">
-                  {campaign.revenue}
-                </p>
-
-
-
-                <p className="text-slate-400 mt-2">
-                  {campaign.conversions} conversions
-                </p>
-
-
-              </div>
+                {...campaign}
+              />
 
             ))}
 
@@ -343,8 +316,21 @@ export default function DashboardPage() {
 
 
 
-        {/* Quick Links */}
+        {/* Activity */}
 
+        <section className="mt-10">
+
+          <ActivityFeed />
+
+        </section>
+
+
+
+
+
+
+
+        {/* Quick Actions */}
 
         <section className="grid md:grid-cols-4 gap-5 mt-10">
 
@@ -356,6 +342,7 @@ export default function DashboardPage() {
             ["📊 Analytics","/analytics"],
           ].map((item)=>(
 
+
             <a
               key={item[1]}
               href={item[1]}
@@ -365,6 +352,7 @@ export default function DashboardPage() {
               {item[0]}
 
             </a>
+
 
           ))}
 
