@@ -1,10 +1,42 @@
-import Link from "next/link";
+import StatsCard from "@/components/StatsCard";
+import DataTable from "@/components/DataTable";
+
 
 export const metadata = {
   title: "Content Manager | NorthSky CRM",
   description:
     "Manage NorthSky affiliate content, reviews, comparisons, and SEO campaigns.",
 };
+
+
+
+const stats = [
+  {
+    title: "Published Articles",
+    value: "27",
+    change: "+5 this month",
+    icon: "📝",
+  },
+  {
+    title: "Monthly Traffic",
+    value: "23.6K",
+    change: "+18%",
+    icon: "📊",
+  },
+  {
+    title: "Content Revenue",
+    value: "$2,170",
+    change: "+24%",
+    icon: "💰",
+  },
+  {
+    title: "SEO Opportunities",
+    value: "42",
+    change: "Growing",
+    icon: "🔍",
+  },
+];
+
 
 
 const content = [
@@ -51,114 +83,113 @@ const content = [
 ];
 
 
+
+const columns = [
+  {
+    key:"title",
+    label:"Article",
+  },
+  {
+    key:"type",
+    label:"Type",
+  },
+  {
+    key:"category",
+    label:"Category",
+  },
+  {
+    key:"traffic",
+    label:"Traffic",
+  },
+  {
+    key:"revenue",
+    label:"Revenue",
+    render:(value)=>(
+      <span className="text-green-400 font-bold">
+        {value}
+      </span>
+    ),
+  },
+  {
+    key:"status",
+    label:"Status",
+    render:(value)=>(
+      <span
+        className={`px-3 py-1 rounded-full text-xs ${
+          value === "Published"
+          ? "bg-green-500/20 text-green-400"
+          : value === "Draft"
+          ? "bg-yellow-500/20 text-yellow-400"
+          : "bg-blue-500/20 text-blue-400"
+        }`}
+      >
+        {value}
+      </span>
+    ),
+  },
+];
+
+
+
 export default function ContentPage() {
+
 
   return (
 
-    <main className="min-h-screen bg-slate-950 text-white p-8">
+    <main className="min-h-screen bg-slate-950 text-white">
 
-      <div className="max-w-7xl mx-auto">
 
+      <div className="max-w-7xl mx-auto p-8">
+
+
+
+        {/* Header */}
 
         <div className="flex justify-between items-center mb-10">
 
+
           <div>
+
             <h1 className="text-4xl font-bold">
               Content Manager
             </h1>
 
+
             <p className="text-slate-400 mt-2">
-              Create, track, and optimize NorthSky affiliate content.
+              Create, optimize, and monetize affiliate content.
             </p>
+
+
           </div>
 
 
-          <button className="bg-blue-600 px-5 py-3 rounded-lg hover:bg-blue-700">
+
+          <button className="bg-blue-600 hover:bg-blue-700 px-5 py-3 rounded-lg">
+
             + New Article
+
           </button>
+
 
         </div>
 
 
 
-        <div className="grid md:grid-cols-3 gap-6">
-
-
-          {content.map((item)=> (
-
-            <div
-              key={item.title}
-              className="bg-slate-900 border border-slate-800 rounded-xl p-6"
-            >
-
-              <div className="flex justify-between">
-
-                <h2 className="text-xl font-semibold">
-                  {item.title}
-                </h2>
-
-
-                <span
-                  className={`text-xs px-3 py-1 rounded-full ${
-                    item.status === "Published"
-                    ? "bg-green-500/20 text-green-400"
-                    : item.status === "Draft"
-                    ? "bg-yellow-500/20 text-yellow-400"
-                    : "bg-blue-500/20 text-blue-400"
-                  }`}
-                >
-                  {item.status}
-                </span>
-
-              </div>
-
-
-              <p className="text-blue-400 mt-3">
-                {item.type}
-              </p>
-
-
-              <p className="text-slate-400 text-sm mt-2">
-                {item.category}
-              </p>
 
 
 
-              <div className="mt-6 space-y-2 text-sm">
 
-                <div className="flex justify-between">
-                  <span>
-                    Monthly Traffic
-                  </span>
+        {/* Stats */}
 
-                  <span>
-                    {item.traffic}
-                  </span>
-                </div>
+        <div className="grid md:grid-cols-4 gap-6">
 
 
-                <div className="flex justify-between">
+          {stats.map((stat)=>(
 
-                  <span>
-                    Affiliate Revenue
-                  </span>
-
-                  <span className="text-green-400">
-                    {item.revenue}
-                  </span>
-
-                </div>
-
-              </div>
-
-
-
-              <button className="mt-6 w-full bg-slate-800 hover:bg-slate-700 py-2 rounded-lg">
-                Manage Content
-              </button>
-
-
-            </div>
+            <StatsCard
+              key={stat.title}
+              {...stat}
+            />
 
           ))}
 
@@ -168,7 +199,33 @@ export default function ContentPage() {
 
 
 
-        <div className="mt-12 bg-slate-900 rounded-xl p-6 border border-slate-800">
+
+
+
+        {/* Content Table */}
+
+        <div className="mt-10">
+
+
+          <DataTable
+            title="Content Library"
+            columns={columns}
+            data={content}
+          />
+
+
+        </div>
+
+
+
+
+
+
+
+
+        {/* AI Pipeline */}
+
+        <section className="mt-10 bg-slate-900 border border-slate-800 rounded-xl p-6">
 
 
           <h2 className="text-2xl font-bold">
@@ -176,67 +233,119 @@ export default function ContentPage() {
           </h2>
 
 
-          <div className="grid md:grid-cols-4 gap-4 mt-6">
+
+          <div className="grid md:grid-cols-4 gap-5 mt-6">
 
 
-            <div className="bg-slate-800 p-4 rounded-lg">
-              <p className="text-slate-400">
-                Ideas
-              </p>
-              <h3 className="text-2xl font-bold">
-                42
-              </h3>
-            </div>
+            {[
+              ["💡 Ideas","42"],
+              ["✍️ Writing","8"],
+              ["🚀 Published","27"],
+              ["💰 Revenue Pages","14"],
+            ].map((item)=>(
 
 
-            <div className="bg-slate-800 p-4 rounded-lg">
+              <div
+                key={item[0]}
+                className="bg-slate-800 rounded-lg p-5"
+              >
 
-              <p className="text-slate-400">
-                Writing
-              </p>
-
-              <h3 className="text-2xl font-bold">
-                8
-              </h3>
-
-            </div>
+                <p className="text-slate-400">
+                  {item[0]}
+                </p>
 
 
-            <div className="bg-slate-800 p-4 rounded-lg">
-
-              <p className="text-slate-400">
-                Published
-              </p>
-
-              <h3 className="text-2xl font-bold">
-                27
-              </h3>
-
-            </div>
+                <h3 className="text-3xl font-bold mt-2">
+                  {item[1]}
+                </h3>
 
 
-            <div className="bg-slate-800 p-4 rounded-lg">
+              </div>
 
-              <p className="text-slate-400">
-                Revenue Pages
-              </p>
 
-              <h3 className="text-2xl font-bold text-green-400">
-                14
-              </h3>
-
-            </div>
+            ))}
 
 
           </div>
 
 
-        </div>
+        </section>
+
+
+
+
+
+
+
+        {/* SEO Automation */}
+
+        <section className="grid md:grid-cols-3 gap-6 mt-10">
+
+
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+
+            <h3 className="font-bold text-xl">
+              Keyword Opportunities
+            </h3>
+
+            <p className="text-3xl font-bold mt-4">
+              186
+            </p>
+
+            <p className="text-green-400 mt-2">
+              Ready for content
+            </p>
+
+          </div>
+
+
+
+
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+
+            <h3 className="font-bold text-xl">
+              AI Generated Drafts
+            </h3>
+
+            <p className="text-3xl font-bold mt-4">
+              34
+            </p>
+
+            <p className="text-slate-400 mt-2">
+              Waiting review
+            </p>
+
+          </div>
+
+
+
+
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+
+            <h3 className="font-bold text-xl">
+              Revenue Target
+            </h3>
+
+            <p className="text-3xl font-bold text-blue-400 mt-4">
+              $10K/mo
+            </p>
+
+            <p className="text-slate-400 mt-2">
+              From content assets
+            </p>
+
+          </div>
+
+
+        </section>
+
 
 
       </div>
 
+
     </main>
 
   );
+
 }
